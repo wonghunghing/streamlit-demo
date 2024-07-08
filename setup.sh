@@ -1,8 +1,4 @@
-mkdir -p ~/.streamlit
-
-echo "\
-[general]\n\
-email = \"email@domain\"\n\
+mkdir -p ~/.streamlit/
 
 echo "\
 [server]\n\
