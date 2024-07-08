@@ -1,6 +1,8 @@
 import streamlit as st
 from flask import Flask, redirect, request, render_template_string
 import os
+from dotenv import load_dotenv
+from langchain_openai.chat_models import ChatOpenAI
 
 app = Flask(__name__)
 
@@ -25,8 +27,15 @@ def page_not_found(e):
     return redirect('/', code=301)
 
 def main():
+    load_dotenv()
     st.title('My Streamlit App')
     st.write('testing nice 888888')
+    llm = ChatOpenAI(model='gpt-3.5-turbo-0125')
+    myinput = st.text_input("prompt")
+    response = llm.invoke(input=myinput)
+    st.write(response)
+    
+    
     # Your Streamlit app code here
 
 if __name__ == '__main__':
