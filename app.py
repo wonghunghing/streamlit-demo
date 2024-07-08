@@ -3,8 +3,12 @@ from flask import Flask, redirect, request, render_template_string
 import os
 from dotenv import load_dotenv
 from langchain_openai.chat_models import ChatOpenAI
+import time
 
 app = Flask(__name__)
+
+load_dotenv()
+llm = ChatOpenAI(model='gpt-3.5-turbo-0125')
 
 @app.before_request
 def before_request():
@@ -26,14 +30,23 @@ def page_not_found(e):
     # Redirect to root page
     return redirect('/', code=301)
 
+def generate_openai_responses(input_text):
+    # Invoke the OpenAI model and yield responses
+    while True:
+        if input_text:
+            response = llm.invoke(input=input_text)
+            yield response['content']
+        else:
+            yield ""  # Yield empty string if no input
+        time.sleep(1)
+
 def main():
-    load_dotenv()
+    
     st.title('My Streamlit App')
     st.write('testing nice 888888')
-    llm = ChatOpenAI(model='gpt-3.5-turbo-0125')
+    
     myinput = st.text_input("prompt")
-    response = llm.invoke(input=myinput)
-    st.write(response)
+    st.write_stream(generate_openai_responses(myinput))
     
     
     # Your Streamlit app code here
