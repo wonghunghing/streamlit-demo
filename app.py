@@ -1,5 +1,5 @@
 import streamlit as st
-from flask import Flask, redirect, request, render_template_string
+from flask import Flask, redirect, request
 import os
 from dotenv import load_dotenv
 from langchain_openai.chat_models import ChatOpenAI
@@ -17,7 +17,7 @@ def before_request():
     url = request.url
     # Redirect http to https
     if request.headers.get('X-Forwarded-Proto') == 'http':
-        print("redirect from http to https")
+        print("Redirecting from http to https")
         url = url.replace('http://', 'https://', 1)
     # Redirect www to non-www
     if request.host.startswith('www.'):
@@ -44,4 +44,7 @@ def main():
         st.write_stream(stream_data(response=response))
 
 if __name__ == '__main__':
+    # Run the Flask app
+    app.run()
+    # Run the Streamlit app
     main()
