@@ -5,13 +5,6 @@ from dotenv import load_dotenv
 from langchain_openai.chat_models import ChatOpenAI
 import time
 
-app = Flask(__name__)
-
-load_dotenv()
-llm = ChatOpenAI(model='gpt-3.5-turbo-0125')
-st.title('My Streamlit App')
-st.write('testing nice 888888')
-
 # @app.before_request
 # def before_request():
 #     url = request.url
@@ -38,13 +31,14 @@ def stream_data(response):
         time.sleep(0.02)
 
 def main():
+    load_dotenv()
+    llm = ChatOpenAI(model='gpt-3.5-turbo-0125')
+    st.title('My Streamlit App')
+    st.write('testing nice 777')
     myinput = st.text_input("prompt")
     if myinput:
         response = llm.invoke(input=myinput)
         st.write_stream(stream_data(response=response))
 
 if __name__ == '__main__':
-    # Run the Flask app
-    app.run()
-    # Run the Streamlit app
     main()
