@@ -42,7 +42,7 @@ def main():
         for word in words:
             full_response += word + " "
             output.write(full_response)
-            time.sleep(0.1)
+            time.sleep(0.05)
 
 
 if __name__ == '__main__':
