@@ -34,8 +34,15 @@ def page_not_found(e):
 
 def main():
     myinput = st.text_input("prompt")
-    response = llm.invoke(input=myinput)
-    st.write(response.content)
+    if myinput:
+        response = llm.invoke(input=myinput)
+        output = st.empty()
+        words = response.content.split()
+        full_response = ""
+        for word in words:
+            full_response += word + " "
+            output.write(full_response)
+            time.sleep(0.1)
 
 
 if __name__ == '__main__':
