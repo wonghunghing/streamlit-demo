@@ -35,7 +35,7 @@ def page_not_found(e):
 def main():
     myinput = st.text_input("prompt")
     response = llm.invoke(input=myinput)
-    st.write(response)
+    st.write(response.content)
 
 
 if __name__ == '__main__':
