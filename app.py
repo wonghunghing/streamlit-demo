@@ -9,6 +9,8 @@ app = Flask(__name__)
 
 load_dotenv()
 llm = ChatOpenAI(model='gpt-3.5-turbo-0125')
+st.title('My Streamlit App')
+st.write('testing nice 888888')
 
 @app.before_request
 def before_request():
@@ -30,26 +32,11 @@ def page_not_found(e):
     # Redirect to root page
     return redirect('/', code=301)
 
-def generate_openai_responses(input_text):
-    # Invoke the OpenAI model and yield responses
-    while True:
-        if input_text:
-            response = llm.invoke(input=input_text)
-            yield response
-        else:
-            yield ""  # Yield empty string if no input
-        time.sleep(1)
-
 def main():
-    
-    st.title('My Streamlit App')
-    st.write('testing nice 888888')
-    
     myinput = st.text_input("prompt")
-    st.write_stream(generate_openai_responses(myinput))
-    
-    
-    # Your Streamlit app code here
+    response = llm.invoke(input=myinput)
+    st.write(response)
+
 
 if __name__ == '__main__':
     main()
