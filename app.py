@@ -32,18 +32,16 @@ def page_not_found(e):
     # Redirect to root page
     return redirect('/', code=301)
 
+def stream_data(response):
+    for word in response.content.split(" "):
+        yield word + " "
+        time.sleep(0.02)
+
 def main():
     myinput = st.text_input("prompt")
     if myinput:
         response = llm.invoke(input=myinput)
-        output = st.empty()
-        words = response.content.split()
-        full_response = ""
-        for word in words:
-            full_response += word + " "
-            output.write(full_response)
-            time.sleep(0.05)
-
+        st.write_stream(stream_data(response=response))
 
 if __name__ == '__main__':
     main()
