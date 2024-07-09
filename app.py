@@ -35,7 +35,7 @@ def generate_openai_responses(input_text):
     while True:
         if input_text:
             response = llm.invoke(input=input_text)
-            yield response['output']
+            yield response
         else:
             yield ""  # Yield empty string if no input
         time.sleep(1)
